@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('notes.index') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('notes.category_notes', category_id=note.category_id) }}">{{note.name}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{% block title %} {{note.title}} {% endblock %}</li>        
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="row pt-2 pb-4">
+        <article class="blog-post pt-3">
+            <h2 class="blog-post-title">{{note.title}}</h2>
+            <p class="blog-post-meta">Posted on {{ note.created.strftime('%Y-%m-%d') }}</p>
+
+            <!--p class="lead">{{note.content}}</p-->
+            <hr>
+            {{note.content|safe}}
+        </article>
+    </div>
+    <div class="row mb-4"> 
+        <div class="col-12">
+            <a href="{{ url_for('notes.update_note', id=note.id) }}" class="btn btn-primary">EDIT</a>
+        </div>
+    </div>
+{% endblock %}

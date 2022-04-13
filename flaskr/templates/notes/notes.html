@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('notes.index') }}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{% block title %} {{page}} {% endblock %}</li>        
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="row pt-4 pb-4 h4 text-center">{{page}}</div>
+    <div class="row pt-4 pb-2">
+    {% for item in notes %}
+        <div class="col-sm-12 col-md-6">
+            <div class="card border-primary">
+                <a class="text-decoration-none" href="{{ url_for('notes.note', id=item.id) }}"> 
+                    <div class="card-body text-center">
+                        <h5 class="card-title"><i class="fas fa-list"></i> {{item.title}}</h5>
+                    </div>
+                </a>
+            </div>            
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}

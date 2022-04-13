@@ -1,0 +1,42 @@
+DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS category;
+DROP TABLE IF EXISTS series;
+DROP TABLE IF EXISTS journal;
+
+CREATE TABLE user (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL
+);
+
+CREATE TABLE category (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    name TEXT UNIQUE NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user (id)
+);
+
+CREATE TABLE series (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    name TEXT UNIQUE NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user (id)
+);
+
+CREATE TABLE journal (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    title TEXT NOT NULL,
+    category_id INTEGER NOT NULL,
+    series_id INTEGER,
+    image TEXT,
+    content TEXT NOT NULL,
+    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    tags TEXT,
+    status TEXT NOT NULL DEFAULT 'DRAFT',
+    clicks INTEGER NOT NULL DEFAULT 0,
+    FOREIGN KEY (user_id) REFERENCES user (id),
+    FOREIGN KEY (category_id) REFERENCES category (id),
+    FOREIGN KEY (series_id) REFERENCES series (id)
+);
